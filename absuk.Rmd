@@ -1,0 +1,132 @@
+---
+title: "UK Company Index for Access and Benefit-Sharing"
+author: "Paul Oldham"
+date: "22 February 2017"
+output:
+  rmdshower::shower_presentation:
+    self_contained: false
+    highlight: tango
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r library, echo=FALSE, include=FALSE}
+library(tidyverse)
+```
+
+## The UK Company Index for ABS
+
+Paul Oldham 
+
+#### [One World Analytics]([http://oneworldanalytics.com/)
+
+
+###Simon Industrial Fellow
+###Manchester Institute for Innovation Research 
+###Alliance Manchester Business School
+
+## Background
+
+The Question: How to independently identify companies and organisations utilising genetic resources (and associated traditional knowledge) in the UK?
+
+Our Solution: Build an index of companies/organisations who have filed a patent application that: 
+
+a) contains a reference to genetic material (a species name), and; 
+b) contains a UK applicant or inventor. 
+
+We could do this because we had already indexed 14 million patent documents (1975-2013) for species names as reported earlier in a 2013 [PLOS ONE](http://journals.plos.org/plosone/article?id=10.1371/journal.pone.0078737) article.
+
+## Methods
+
+We extracted the patent applicant names from the patent documents and then performed a lookup using a combination of:
+
+a) UK Companies House data
+b) [Open Corporates](https://opencorporates.com/)
+c) Manual and automated web searching
+
+Our aim was to obtain registration numbers, postal addresses, and email addresses for the entities so that they could be contacted by DEFRA and/or the UK regulator.
+
+All data was cross-checked by at least one other person in a team of 5 to ensure accuracy.
+
+## Outcomes
+
+1. A main table excel sheet and supplementary table
+2. A simple online map
+2. An interactive online App (that allows companies to be looked up)
+
+## The Table
+
+## The App (as of 2017)
+
+
+
+## Issues 1
+
+We had aimed to automate the entire process but the data was very MESSY and required extensive cross-checking by a combined team of 5 people:
+
+- Names are Messy (really really messy);
+- Companies merge, demerge, cease to operate... all the time (identifiable in company registers);
+- Companies/organizations may have multiple legal personalities;
+- [Standard Industrial Classification (SIC) codes](https://en.wikipedia.org/wiki/Standard_Industrial_Classification) used by UK Companies House and for national statistics are proved useless as a means for exploring data (e.g. pharmaceutical companies headquarters are typically listed as `70100 - Activities of head offices` not as pharmaceuticals).
+
+## Issues 2
+
+- Email addresses are often catch all `info@company.co.uk` and it is not clear if those email accounts are checked;
+- Persons who might be responsible for ABS issues (e.g. legal officers etc.) cannot generally be identified on websites and may change over time;
+- The Data Protection Act requires careful consideration of the use and storage of what might be considered personal information. Are official email addresses on a public website personal information within the meaning of such Acts? Probably not but we expunged personal name addresses from the data.  
+
+## Issues 3
+
+Identifying sectors proved time consuming because the SIC data was so poor. We adopted an approach of:
+
+- Manually reviewing websites to identify and summarise what entities said they did.
+- Identifying one or two word phrases to describe sectors (e.g. Agriculture, Pharmaceuticals etc.)
+- We encountered a small amount of noise originating from our patent data and introduced a traceback table to link to the patents.
+
+At the end of all of this... we wanted to cry... or drink a cocktail on a beach. 
+
+## Results
+
+1,525 legal entities in `x` sectors. 
+
+```{r}
+#ggplot of companies by sector goes here
+```
+
+## Legal Personalities
+
+```{r}
+# companies with the same parent by code
+```
+
+
+## Lessons Learned
+
+This task is much more difficult than it originally appears!!!
+
+- Information gathering can be automated but information processing requires human resources and is time consuming;
+- Maintaining or updating an index will be labour intensive but could be done once a year;
+- A patent approach focuses on what people do (R&D investments) but may not capture sectors who do not actively pursue patents or that rely on trade secrecy or simple secrecy (illicit trade);
+- Indexing should not be seen as a tool for persectuing companies. It casts light on the role of genetic resources in national economies, the diversity of innovative activity involving biodiversity, and is a tool for engagement between regulators and companies/organisations. 
+
+## Annex
+
+Annex
+
+
+## Data Cleaning
+
+- The original index contained company names with mixed all capitals or camel case. These were regularised to lower and then to camel (Proper case). Names were reviewed and in cases where it was clear that a company name was an abbreviation e.g. Ici is ICI the capitals were restored. 
+- The term Limited may form part of a formal company name and therefore appears as Limited or Ltd.
+- Full stops as part of a name were left as is. All others were removed. 
+
+
+## Noise Issues
+
+Why is Skype in there?
+
+## Clarify Issue
+
+
