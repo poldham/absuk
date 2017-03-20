@@ -49,7 +49,7 @@ We could do this because we had already indexed 14 million patent documents (197
 ## UK Patent Trends for Genetic Resources
 
 ```{r, trends, echo=FALSE, fig.align='center', out.width="800px"}
-knitr::include_graphics("images/uk_trends.tiff")
+knitr::include_graphics("images/uk_trends.png")
 ```
 
 ## Issues with patent data
