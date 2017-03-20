@@ -7,27 +7,90 @@ output: html_document
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
 ```
 
-## Tidying UK company index
+## Introduction
 
-The UK company index raw file contains some noisy elements
+This document walks through the tidying steps for the UK company index on access and benefit-sharing. Raw data is located in data-raw.
 
-Sectors to clarify. In some cases during the original research the team found it difficult to allocate a company to a sector. 
+## Import the dataset
 
 ```{r}
-clarify <- filter(ukindex, sector == "CLARIFY")
+ukindex <- read_csv("/Users/pauloldham17inch/Desktop/absuk/data/ukindex.csv")
 ```
 
-# Organisations lacking latitude and longitude
+
+## Convert column names
+
+```{r}
+names(ukindex) <- tolower(names(ukindex))
+names(ukindex) <- stringr::str_replace_all(names(ukindex), " ", "_")
+
+```
+
+## Rename Sector
+
+```{r}
+ukindex <- rename(ukindex, "sector" = simple_sector)
+ukindex <- rename(ukindex, "detail" = reviewer_sector)
+```
+
+## Remove invalid multibyte strings
+
+We have some junk characters that have crept into the dataset. To remove them we can use
+
+```{r}
+ukindex$company_name <- stringr::str_replace_all(ukindex$company_name, "<*>", "")
+```
+
+## tidy company_name
+
+Create a new field call name in place of the company_name field with mixed characters. 
+
+```{r}
+# add name
+ukindex$name <- tolower(ukindex$company_name)
+
+#convert to camel case but leads to abbreviated forms as irregular
+#ukindex$name <- rapportools::tocamel(ukindex$name, upper = TRUE, sep = " ")
+
+# move name to the first column
+
+ukindex <- select(ukindex, 16, 1:15)
+```
+
+Note that the above approach will turn some abbreviations into lower case. Living with it for the time being. 
+
+## Drop entities without lat long
 
 ```{r}
 ukindex1 <- drop_na(ukindex, latitude)
-readr::write_csv(ukindex1, "ukindex/ukindex1.csv")
 ```
 
+Write the file to the app folder
+
+```{r}
+write_csv(ukindex1, "ukindex/ukindex1.csv")
+```
+
+Note that for the app the company name has now changed to name.
+
+Also note, that there is a mixed encoding problem in the file that needs to be converted to UTF8
+
+# Clarifying Sectors
+
+The original dataset (see data-raw) contained a clarify value in sector. This arose because in some cases during the original research the team found it difficult to allocate a company to a sector. This has been manually addressed and cleaned up. 
+
+```{r}
+#clarify <- filter(ukindex, sector == "CLARIFY")
+```
+
+The clarify group was individually reviewed and allocated to a sector. 
 
 ## Setting boundaries for the map
+
+Use the geonames package to retrieve the UK boundaries and save to a file for use in mapping. File is saved to the ukindex app folder for use in Shiny App. 
 
 ```{r}
 library(geonames)
@@ -35,51 +98,68 @@ options(geonamesUsername = "yourusername")
 uk_geonames_info <- GNcountryInfo(country = "UK")
 uk_bounds <- uk_geonames_info %>% select(south, north, east, west)
 readr::write_csv(uk_bounds, "ukindex/uk_bounds.csv")
-
 save(uk_bounds, file = "ukindex/uk_bounds.rda")
 ```
-
 
 ## Add the UK Company Websites to the list as that makes a lot of sense. 
 
 Needs an lapply approach I think because each website is different. It may actually need a forloop here rather than lapply
 
+Maybe need to do this in two steps or use purr::map
+
 ```{r}
-lapply()
-
-
+website_map <- function(url, label){
 href <- "<a href="
-    close_href <- ">"  #included for flexibility in labelling
-    close_a <- "</a>"
- out <- paste0(href, shQuote(url), close_href, label, close_a)
+close_href <- ">" 
+close_a <- "</a>"
+comma <- ","
+target <- "target = 'blank'"
+out <- paste0(href, shQuote(url), comma, shQuote(target), close_href, label, close_a)
+}
+
 ```
 
 
+Ok, the problem is that it seems that the label value cannot easily be passed through to this. Maybe try the map function to see if that works better. May need to convert NA to a literal "NA" for this to work properly. 
 
-## Adding Pop Ups
+```{r}
+lapply(ukindex1$website, website_map, "label")
+```
+
+## Adding Pop Ups for a Map
+
+Add in target = blank so opens in a new tab. 
+
+code should be target = "_blank"
+
+as in this example
+
+a("here.", href="https://www.google.co.uk/url?sa=t&rct=j&q=&esrc=s&source=web&cd=1&cad=rja&uact=8&ved=0ahUKEwj51J7R5bXSAhWpBcAKHR_-C0kQFgghMAA&url=http%3A%2F%2Frandd.defra.gov.uk%2FDocument.aspx%3FDocument%3D13485_WC1085NagoyaABSUKCompanyIndexOverview.pdf&usg=AFQjCNH6BorZWhOOJ5e_H4dF2ggvKul7Gg", target = "_blank")
 
 ```{r}
 map_url <- function(query, label = "NULL", type = "NULL") {
     href <- "<a href="
     close_href <- ">"  #included for flexibility in labelling
     close_a <- "</a>"
+    comma <- ","
+    target <- "target = 'blank'"
     if (type == "google") {
         query <- stringr::str_replace_all(query, " ", "+")
         google_base <- "https://www.google.co.uk/#q="
         url <- paste0(google_base, query)
-        out <- paste0(href, shQuote(url), close_href, label, close_a)
+        out <- paste0(href, shQuote(url), comma, shQuote(target), close_href, label, close_a)
     }
     if (type == "companies_house") {
         query <- stringr::str_replace_all(query, " ", "+")
         companies_base <- "https://beta.companieshouse.gov.uk/search?q="
         url <- paste0(companies_base, query)
-        out <- paste0(href, shQuote(url), close_href, label, close_a)
+        out <- paste0(href, shQuote(url), comma, shQuote(target), close_href, label, close_a)
     }
     if (type == "gbif") {
         query <- stringr::str_replace_all(query, " ", "+")
         gbif_base <- "http://www.gbif.org/species/search?q="
         url <- paste0(gbif_base, query)
-        out <- paste0(href, shQuote(url), close_href, label, close_a)
+        out <- paste0(href, shQuote(url), comma, shQuote(target), close_href, label, close_a)
     }
     if (type == "lens") {
         # note restriction to main jurisdictions and no stemming to reduce
@@ -87,18 +167,20 @@ map_url <- function(query, label = "NULL", type = "NULL") {
         query <- stringr::str_replace_all(query, " ", "+")
         lens_base <- "https://www.lens.org/lens/search?q=applicant"
         url <- paste0(lens_base, "%3A", "%22", query, "%22", "&predicate=%26%26&l=en&f=true")
-        out <- paste0(href, shQuote(url), close_href, label, close_a)
+        out <- paste0(href, shQuote(url), comma, shQuote(target), close_href, label, close_a)
     }
     if (type == "espacenet"){
       query <- stringr::str_replace_all(query, " ", "+")
       espacenet_base <- "https://worldwide.espacenet.com/searchResults?submitted=true&locale=en_EP&DB=EPODOC&ST=advanced&TI=&AB=&PN=&AP=&PR=&PD=&PA="
       url <- paste0(espacenet_base, query)
-      out <- paste0(href, shQuote(url), close_href, label, close_a)
+      out <- paste0(href, shQuote(url), comma, shQuote(target), close_href, label, close_a)
       
     }
     out
 }
 ```
+
+Generate the labels as individual columns.
 
 ```{r}
 ukindex1$google <- map_url(ukindex1$company_name, label = "Lookup Google", type = "google")
@@ -107,23 +189,120 @@ ukindex1$companies_house <- map_url(ukindex1$company_name, label = "Lookup Compa
 ukindex1$espacenet <- map_url(ukindex1$company_name, label = "Lookup Patents", type = "espacenet")
 ```
 
-combine the labels
+Combine the labels into cone column
 ```{r}
 ukindex1$combined_label <- paste0("<br>", "<strong>", ukindex1$company_name, "</strong>", "</br>",  "<br>", ukindex1$google, "</br>", "<br>", ukindex1$companies_house, "</br>", "<br>", ukindex1$espacenet, "</br>")
 ```
 
-
-test in leaflet
+An error message appears later in Shiny that `input string 3 is invalid in this locale`. As it is not obvious what this is (but probably the company name field). Let's try dropping unecessary columns as that will also create a tidier table.
 
 ```{r}
-    leaflet(ukindex1) %>% 
+ukindex2 <- select(ukindex1, name, company_number, status, parent_company, website, address, sector, detail, latitude, longitude, combined_label)
+```
+
+
+
+## Test the map in leaflet
+
+Our aim is to place the data in a Shiny App that uses a leaflet map. Before we get into that it is a good idea to test if our map will work. We can do that with the following code. 
+
+```{r}
+    leaflet(ukindex2) %>% 
       addTiles() %>% fitBounds(lng1 = uk_bounds$west, lat1 = uk_bounds$north, lng2 = uk_bounds$east, lat2 = uk_bounds$south) %>% addCircleMarkers(lng = ukindex1$longitude, lat = ukindex1$latitude, popup = ukindex1$combined_label, radius = 1, weight = 2, opacity = 0.5, fill= TRUE, fillOpacity = 0.2)
 ```
 
 
 Send to the app
 
+
+```{r}
+readr::write_csv(ukindex1, "ukindex/ukindex1.csv")
+readr::write_csv(ukindex2, "ukindex/ukindex2.csv")
+```
+
+
+## Reading in the data with species information
+
+Read in the dataset called `ukindex_core_species_patents` as `ukindex_species`.
+
+```{r}
+View(ukindex_species)
+```
+
+Do all of the above steps as before
+
 ```{r}
 
 ```
 
+## Convert column names
+
+```{r}
+names(ukindex_species) <- tolower(names(ukindex_species))
+names(ukindex_species) <- stringr::str_replace_all(names(ukindex_species), " ", "_")
+
+```
+
+## Rename Sector
+
+```{r}
+ukindex_species <- rename(ukindex_species, "sector" = simple_sector)
+ukindex_species <- rename(ukindex_species, "detail" = reviewer_sector)
+```
+
+## Remove invalid multibyte strings
+
+We have some junk characters that have crept into the dataset. To remove them we can use
+
+```{r}
+ukindex_species$company_name <- stringr::str_replace_all(ukindex_species$company_name, "<*>", "")
+```
+
+## tidy company_name
+
+Create a new field call name in place of the company_name field with mixed characters. 
+
+```{r}
+# add name
+ukindex_species$name <- tolower(ukindex_species$company_name)
+
+#convert to camel case but leads to abbreviated forms as irregular
+#ukindex$name <- rapportools::tocamel(ukindex$name, upper = TRUE, sep = " ")
+
+# move name to the first column
+
+ukindex_species <- select(ukindex_species, 16, 1:15)
+```
+
+Note that the above approach will turn some abbreviations into lower case. Living with it for the time being. 
+
+## Drop entities without lat long
+
+```{r}
+ukindex_species1 <- drop_na(ukindex_species, latitude)
+```
+
+Write the file to the app folder
+
+```{r}
+write_csv(ukindex_species1, "ukindex/ukindex_species1.csv")
+```
+
+
+
+# Look up lat long entities IGNORE FOR THE MOMENT
+
+Not working at present try ggmap instead. 
+
+
+```{r}
+lookup_lat <- ukindex[is.na(ukindex$latitude),]
+```
+
+Lookup the lat and long
+
+```{r}
+library(RgoogleMaps)
+
+DF <- with(lookup_lat, data.frame(address, t(sapply(lookup_lat$address, getGeoCode))))
+```
