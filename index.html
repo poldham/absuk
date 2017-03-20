@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>UK Company Index for Access and Benefit-Sharing</title>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="index_files/rmdshower/node_modules/shower-ribbon/styles/screen-4x3.css">
+  <link rel="stylesheet" href="index_files/rmdshower/package/styles/screen-4x3.css">
+  <link rel="stylesheet" href="index_files/rmdshower/style-common.css">
+  <link rel="stylesheet" href="index_files/rmdshower/style-ribbon.css">
+  <link rel="stylesheet" href="index_files/rmdshower/style-override.css">
+  
+  
+  
+  
+  
+</head>
+
+<body class="shower list">
+
+  <header class="caption">
+    <h1>UK Company Index for Access and Benefit-Sharing</h1>
+    <p>Paul Oldham</p>
+  </header>
+
+    
+  
+<section id="the-uk-company-index-for-abs" class="slide level2">
+<h2>The UK Company Index for ABS</h2>
+<p>Paul Oldham</p>
+<h4 id="one-world-analytics"><a href="%5Bhttp://oneworldanalytics.com/">One World Analytics</a></h4>
+<h3 id="simon-industrial-fellow">Simon Industrial Fellow</h3>
+<h3 id="manchester-institute-for-innovation-research">Manchester Institute for Innovation Research</h3>
+<h3 id="alliance-manchester-business-school">Alliance Manchester Business School</h3>
+</section>
+<section id="background" class="slide level2">
+<h2>Background</h2>
+<p>The Question: How to independently identify companies and organisations utilising genetic resources &amp; associated traditional knowledge in the UK?</p>
+<p>Our Solution: Build an index of companies/organisations who have filed a patent application that:</p>
+<ol type="a">
+<li>contains a reference to genetic material (a species name), and;</li>
+<li>contains a UK applicant or inventor.</li>
+</ol>
+<p>We could do this because we had already indexed 14 million patent documents (1975-2013) for species names as reported earlier in a <a href="http://journals.plos.org/plosone/article?id=10.1371/journal.pone.0078737">PLOS ONE</a> article.</p>
+</section>
+<section id="why-patent-data" class="slide level2">
+<h2>Why Patent Data?</h2>
+<ul>
+<li>Patent applications are an indicator of investments in Research and Development and reflect willingness to pay for protection of investments;</li>
+<li>Patent data is accessible (e.g. EPO World Patent Statistical Database - PATSTAT, used by OECD, EUROSTAT and others as the gold standard);</li>
+<li>Patent data is empirically verifiable (that is we do not need to rely on what people <em>say</em> they do and can focus on what they <em>actually</em> do);</li>
+<li>Patent data provides a route to statistical indicators.</li>
+</ul>
+</section>
+<section id="uk-patent-trends-for-genetic-resources" class="slide level2">
+<h2>UK Patent Trends for Genetic Resources</h2>
+<p><img src="images/uk_trends.tiff" width="800px" style="display: block; margin: auto;" /></p>
+</section>
+<section id="issues-with-patent-data" class="slide level2">
+<h2>Issues with patent data</h2>
+<ul>
+<li>Working with patent data at the level of millions of records requires programming and text mining skills;</li>
+<li>Companies may refer to a species either because it is utilized or because it is a target for an invention (e.g. to deal with a pathogen or pest);</li>
+<li>There is a lag time of at least 2 years between submission of an application and its publication (data is historic);</li>
+<li>Mapping patent applicant names into other data sources (company registers etc.) is hard and very messy… but improving with the use of unique identifiers in PATSTAT.</li>
+<li>But… patent data is the best data there is!</li>
+</ul>
+</section>
+<section id="methods" class="slide level2">
+<h2>Methods</h2>
+<p>We extracted the patent applicant names from the patent documents and performed a lookup using a combination of:</p>
+<ol type="a">
+<li>UK Companies House data;</li>
+<li><a href="https://opencorporates.com/">Open Corporates</a> and similar services;</li>
+<li>Manual and automated web searching.</li>
+</ol>
+<p>Our aim was to obtain registration numbers, postal addresses, telephone numbers, email addresses for the entities so that they could be contacted by DEFRA and/or the UK regulator.</p>
+<p>All data was cross-checked but proved to be very messy to work with.</p>
+</section>
+<section id="outcomes" class="slide level2">
+<h2>Outcomes</h2>
+<ol type="1">
+<li>A main table excel sheet and supplementary tables (a boring table);</li>
+<li>A simple online map;</li>
+<li>600 (of 1525) companies and organisations emailed for the UK consultation on ratification;</li>
+<li>An early stage interactive online App (that allows companies to be looked up).</li>
+</ol>
+</section>
+<section id="results-a-boring-table" class="slide level2">
+<h2>Results = A boring table</h2>
+<p><img src="images/ukindex_2017_rev.xls_2017-0318_09-15-16.png" width="900px" style="display: block; margin: auto;" /></p>
+</section>
+<section id="major-uk-sectors" class="slide level2">
+<h2>Major UK Sectors</h2>
+<p><img src="index_files/figure-revealjs/sectors-1.png" width="768" /></p>
+</section>
+<section id="the-interactive-app-visit-the-live-version" class="slide level2">
+<h2>The Interactive App <a href="https://poldham.shinyapps.io/ukindex/">visit the live version</a></h2>
+<p><img src="images/uk_index_map.png" width="800px" style="display: block; margin: auto;" /></p>
+</section>
+<section id="the-data-table-visit-the-live-version" class="slide level2">
+<h2>The Data Table <a href="https://poldham.shinyapps.io/ukindex/">visit the live version</a></h2>
+<p><img src="images/uk_index_table.png" width="800px" style="display: block; margin: auto;" /></p>
+</section>
+<section id="issues" class="titleslide slide level1"><h2 class="shout">Issues</h2></section><section id="data-issues" class="slide level2">
+<h2>Data Issues</h2>
+<p>We had aimed to automate the entire process but the data was very MESSY and required extensive cross-checking by a combined team of 5 people:</p>
+<ul>
+<li>Names are messy (really messy);</li>
+<li>Companies merge, demerge, cease to operate…(partly identifiable in company registers);</li>
+<li>Companies/organizations may have multiple legal personalities;</li>
+<li><a href="https://en.wikipedia.org/wiki/Standard_Industrial_Classification">Standard Industrial Classification (SIC) codes</a> used by UK Companies House and for national statistics proved useless as a means for exploring data (e.g. pharmaceutical companies headquarters are typically listed as <em>70100 - Activities of head offices</em> not as pharmaceuticals).</li>
+</ul>
+</section><section id="contact-detail-issues" class="slide level2">
+<h2>Contact Detail Issues</h2>
+<ul>
+<li>Company addresses may be those of accountants/lawyers or actual offices;</li>
+<li>Email addresses are often catch all <code>info@company.co.uk</code> and it is not clear if those email accounts are checked;</li>
+<li>Persons who might be responsible for ABS issues (e.g. legal officers etc.) cannot generally be identified on websites and may change over time;</li>
+<li>Data Protection Laws in the EU require careful consideration of the use and storage of what might be considered personal information. Are official email addresses on a public website personal information within the meaning of such Acts? Probably not but we expunged personal name addresses from the data.</li>
+</ul>
+</section><section id="sector-issues" class="slide level2">
+<h2>Sector Issues</h2>
+<p>Identifying sectors proved time consuming because the SIC data was so poor. We adopted an approach of:</p>
+<ul>
+<li>Manually reviewing websites to identify what entities said they did;</li>
+<li>Identifying single phrases for major sectors (e.g. Agriculture, Pharmaceuticals etc.);</li>
+<li>Editing for noise (false positives) from our species name matching algorithm using a patent traceback table;</li>
+<li>A need to link sector categories to wider statistical categories (perhaps at a later stage using a concordance table - following OECD approaches);</li>
+</ul>
+</section>
+<section id="thoughts-on-the-eu" class="titleslide slide level1"><h2 class="shout">Thoughts on the EU</h2></section><section id="main-issues" class="slide level2">
+<h2>Main Issues</h2>
+<ul>
+<li>Engagement with stakeholders (who are they?);</li>
+<li>Those who comply with the regulation (Declaration of Due Diligence, national requirements);</li>
+<li>Those who fail to comply (progressively encouraging to enter into compliance);</li>
+</ul>
+</section><section id="thoughts-on-strategy" class="slide level2">
+<h2>Thoughts on Strategy</h2>
+<ul>
+<li>Start with easier approaches and progressively address more difficult areas;</li>
+<li>In our view:
+<ol type="a">
+<li>start with patent activity to capture R &amp; D investments;</li>
+<li>develop methodologies for areas that are harder to capture (e.g. products) over time;</li>
+</ol></li>
+<li>An iterative step by step approach recognises that everything cannot be done now… but can be done over time;</li>
+<li>The diversity of EU languages and data sources is a significant issue. In general, the best approach at EU level (using the Horizon 2020 model) is a consortium of organisations across member states.</li>
+</ul>
+</section><section id="patent-data" class="slide level2">
+<h2>Patent Data</h2>
+<ul>
+<li>Applications originating from countries and persons in the EU are accessible through PATSTAT (the World Patent Statistical Database) which EUROSTAT was involved in establishing;</li>
+<li>Text mining required to update species data after 2013;</li>
+<li>It is possible to elaborate statistical trends in patent activity for the EU and break down by member state (We developed an <a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=1397108">EU indicator for the EEA in 2009</a> but the indicator was later discontinued for unknown reasons).</li>
+</ul>
+</section><section id="company-organisation-data" class="slide level2">
+<h2>Company Organisation Data</h2>
+<ul>
+<li>Look at what OECD has already done on <a href="http://www.oecd.org/sti/inno/43846611.pdf">harmonising patent and company register data</a>. Focuses on OECD member states and available in PATSTAT.</li>
+<li>Very human resource intensive to tidy the data;</li>
+<li>EU languages and name forms will require a concentrated effort (maybe led by research organisations in a member state as part of a consortium?);</li>
+<li>Once an index is established a need for maintenance and update;</li>
+<li>Approach should meet the practical needs of focal points/regulators (important to clarify what they are from a focal point/regulator perspective);</li>
+<li>Approach should facilitate MS reporting under the NP.</li>
+</ul>
+</section><section id="national-data-sources" class="slide level2">
+<h2>National Data Sources</h2>
+<ul>
+<li>Company Registration Databases</li>
+<li>Research Councils/ Funding Organisations</li>
+<li>Other?</li>
+<li>A key issue when working on the EU level will be the diversity of languages and the diversity of languages used within data sources. For that reason national approaches linked to EU level cooperation (probably for shared data needs and harder methodological problems) is likely to be necessary. The Framework programme (Horizon 2020) consortium approach is well established and can work very well.</li>
+</ul>
+</section><section id="other-eu-data-sources-indicative" class="slide level2">
+<h2>Other EU data sources (indicative)</h2>
+<ul>
+<li><a href="http://ec.europa.eu/health/documents/community-register/html/index_en.htm">EC Community Pharmaceuticals Register</a></li>
+<li><a href="http://ec.europa.eu/food/safety/novel_food/catalogue_en">EC Novel Foods</a></li>
+<li><a href="http://ec.europa.eu/growth/tools-databases/cosing/index.cfm?fuseaction=search.results">Authorized Ingredients</a></li>
+<li><a href="http://www.ema.europa.eu/ema/index.jsp?curl=pages/medicines/landing/herbal_search.jsp&amp;mid=WC0b01ac058001fa1d">Herbal Medicines</a></li>
+<li><a href="http://ec.europa.eu/food/plant/plant_propagation_material/plant_variety_catalogues_databases/search/public/index.cfm">Plant varieties</a></li>
+<li><a href="https://echa.europa.eu/information-on-chemicals/ec-inventory">Chemistry</a></li>
+<li>Other EU data sources???</li>
+<li>Issues include, access to data, data cleaning and harmonisation.</li>
+<li>Web services (APIs) are vital for automation but availability for EU sources is presently unclear.</li>
+</ul>
+</section><section id="lessons-learned-from-the-uk-project" class="slide level2">
+<h2>Lessons Learned from the UK project</h2>
+<p>A much more difficult task than it appeared to be!!!</p>
+<ul>
+<li>Information gathering can be automated but information processing requires human resources and is time consuming;</li>
+<li>Maintaining or updating an index will be labour intensive but could be done once a year;</li>
+<li>A patent approach will not capture sectors that do not pursue patents (trade secrecy or illicit trading) - address at later stage;</li>
+<li>Make sure approach addresses actual needs of focal points/regulators;</li>
+<li>Indexing makes R &amp; D for GRs visible and is a tool for engagement with companies and others.</li>
+</ul>
+</section>
+
+  <!--
+  To hide progress bar from entire presentation
+  just remove “progress” element.
+  -->
+  <!-- <div class="progress"></div> -->
+  <script src="index_files/rmdshower/node_modules/shower/node_modules/shower-core/shower.min.js"></script>
+  <!-- Copyright © 2015 Yours Truly, Famous Inc. -->
+  <!-- Photos by John Carey, fiftyfootshadows.net -->
+
+  
+  
+</body>
+</html>
