@@ -49,7 +49,7 @@ We could do this because we had already indexed 14 million patent documents (197
 ## UK Patent Trends for Genetic Resources
 
 ```{r, trends, echo=FALSE, fig.align='center', out.width="800px"}
-knitr::include_graphics("/Users/pauloldham17inch/Desktop/absuk/images/uk_trends.tiff")
+knitr::include_graphics("images/uk_trends.tiff")
 ```
 
 ## Issues with patent data
@@ -82,7 +82,7 @@ All data was cross-checked but proved to be very messy to work with.
 ## Results = A boring table
 
 ```{r, echo=FALSE, table, fig.align='center', out.width="900px"}
-knitr::include_graphics("/Users/pauloldham17inch/Desktop/absuk/images/ukindex_2017_rev.xls_2017-0318_09-15-16.png")
+knitr::include_graphics("images/ukindex_2017_rev.xls_2017-0318_09-15-16.png")
 ```
 
 
@@ -135,13 +135,13 @@ ukindex %>% count(detail, sort = TRUE) %>%
 
 
 ```{r, map, echo=FALSE, fig.align='center', out.width="800px"}
-knitr::include_graphics("/Users/pauloldham17inch/Desktop/absuk/images/uk_index_map.png")
+knitr::include_graphics("images/uk_index_map.png")
 ```
 
 ## The Data Table [visit the live version](https://poldham.shinyapps.io/ukindex/)
 
 ```{r, app_table, echo=FALSE, fig.align='center', out.width="800px"}
-knitr::include_graphics("/Users/pauloldham17inch/Desktop/absuk/images/uk_index_table.png")
+knitr::include_graphics("images/uk_index_table.png")
 ```
 
 # Issues
